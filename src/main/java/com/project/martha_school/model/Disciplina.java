@@ -1,21 +1,27 @@
 package com.project.martha_school.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "disciplina")
-public class Disciplina {
+
+public class Disciplina implements Serializable {
 	
+	private static final long serialVersionUID = 2706181505743827375L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	private Integer codigo;
 	
 	private String nome;
 	
@@ -25,14 +31,20 @@ public class Disciplina {
 	
 	private double media;
 	
-	@OneToMany
-	private List<Professor> professor;
-
+	@OneToOne
+	@JoinColumn(name = "codigo_professor")
+	private Professor professor;
 	
-	public int getCodigo() {
+	@OneToMany
+	@JoinColumn(name = "codigo_disciplina")
+	private List<AlunoMatriculado> alunoMatriculado;
+	
+	
+	
+	public Integer getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(int codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 	public String getNome() {
@@ -59,12 +71,17 @@ public class Disciplina {
 	public void setMedia(double media) {
 		this.media = media;
 	}
-	
-	public List<Professor> getProfessor() {
+	public Professor getProfessor() {
 		return professor;
 	}
-	public void setProfessor(List<Professor> professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+	public List<AlunoMatriculado> getAlunoMatriculado() {
+		return alunoMatriculado;
+	}
+	public void setAlunoMatriculado(List<AlunoMatriculado> alunoMatriculado) {
+		this.alunoMatriculado = alunoMatriculado;
 	}
 	@Override
 	public int hashCode() {

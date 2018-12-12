@@ -1,42 +1,71 @@
 package com.project.martha_school.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "turma")
-public class Turma {
-	
+public class Turma implements Serializable {
+
+	private static final long serialVersionUID = 2323933119984373890L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
-	
+	private Integer codigo;
+
 	private String modulo;
-	
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_inicio")
 	private Date dataInicio;
-	
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_termino")
 	private Date dataTermino;
 	
-	private int quantidadeAlunos;
+	@Column(name = "quantidade_alunos")
+	private int quantidaAlunos;
 	
+	@Transient
 	private int contadorAluno;
 	
 	@OneToMany
-	private List<AlunoMatriculado> AlunoMatriculado;
+	@JoinColumn(name = "codigo_turma")
+	private List<AlunoMatriculado> alunoMatriculado;
+	
+	@OneToMany
+	@JoinColumn(name = "codigo_turma")
+	private List<AgendamentoAulaPerdida> agendamentoAulaPerdida;
+
+	
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
 
 	public String getModulo() {
 		return modulo;
 	}
 
 	public void setModulo(String modulo) {
-	 	this.modulo = modulo;
+		this.modulo = modulo;
 	}
 
 	public Date getDataInicio() {
@@ -55,12 +84,12 @@ public class Turma {
 		this.dataTermino = dataTermino;
 	}
 
-	public int getQuantidadeAlunos() {
-		return quantidadeAlunos;
+	public int getQuantidaAlunos() {
+		return quantidaAlunos;
 	}
 
-	public void setQuantidadeAlunos(int quantidadeAlunos) {
-		this.quantidadeAlunos = quantidadeAlunos;
+	public void setQuantidaAlunos(int quantidaAlunos) {
+		this.quantidaAlunos = quantidaAlunos;
 	}
 
 	public int getContadorAluno() {
@@ -70,23 +99,21 @@ public class Turma {
 	public void setContadorAluno(int contadorAluno) {
 		this.contadorAluno = contadorAluno;
 	}
-	
-	
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
 
 	public List<AlunoMatriculado> getAlunoMatriculado() {
-		return AlunoMatriculado;
+		return alunoMatriculado;
 	}
 
 	public void setAlunoMatriculado(List<AlunoMatriculado> alunoMatriculado) {
-		AlunoMatriculado = alunoMatriculado;
+		this.alunoMatriculado = alunoMatriculado;
+	}
+
+	public List<AgendamentoAulaPerdida> getAgendamentoAulaPerdida() {
+		return agendamentoAulaPerdida;
+	}
+
+	public void setAgendamentoAulaPerdida(List<AgendamentoAulaPerdida> agendamentoAulaPerdida) {
+		this.agendamentoAulaPerdida = agendamentoAulaPerdida;
 	}
 
 	@Override
@@ -110,7 +137,5 @@ public class Turma {
 			return false;
 		return true;
 	}
-	
-	
 
 }

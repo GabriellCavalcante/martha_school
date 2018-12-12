@@ -1,44 +1,47 @@
 package com.project.martha_school.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "agendamento_aula_perdida")
-public class AgendamentoAulaPerdida {
+public class AgendamentoAulaPerdida implements Serializable {
 	
+	private static final long serialVersionUID = -8601539003400678617L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo; 
+	private Integer codigo; 
 	
-	@ManyToOne
-	private Turma turma;
 	
 	@OneToOne
+	@JoinColumn(name = "codigo_disciplina")
 	private Disciplina aulaARepor;
 	
 	private String local;
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_aula")
 	private Date dataAula;
 	
-	public int getCodigo() {
+	
+	
+	public Integer getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(int codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
-	}
-	public Turma getTurma() {
-		return turma;
-	}
-	public void setTurma(Turma turma) {
-		this.turma = turma;
 	}
 	public Disciplina getAulaARepor() {
 		return aulaARepor;
@@ -58,11 +61,12 @@ public class AgendamentoAulaPerdida {
 	public void setDataAula(Date dataAula) {
 		this.dataAula = dataAula;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + codigo;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 	@Override
@@ -74,11 +78,16 @@ public class AgendamentoAulaPerdida {
 		if (getClass() != obj.getClass())
 			return false;
 		AgendamentoAulaPerdida other = (AgendamentoAulaPerdida) obj;
-		if (codigo != other.codigo)
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
 	
+	}
 	
 	
-}
+	
+

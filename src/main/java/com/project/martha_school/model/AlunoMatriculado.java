@@ -1,23 +1,20 @@
 package com.project.martha_school.model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "aluno_matriculado")
-public class AlunoMatriculado extends Pessoa {
+public class AlunoMatriculado extends Pessoa implements Serializable {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int codigo;
+	
+	private static final long serialVersionUID = -2684184303207467575L;
 	
 	private String foto;
 	
@@ -27,25 +24,17 @@ public class AlunoMatriculado extends Pessoa {
 	
 	private boolean desistencia;
 	
-	private String responsavelNotificacao;
+	@Column(name = "responsavel_pela_notificacao")
+	private String responsavelPelaNotificacao;
 	
-	private String motivoDesestencia;
+	@Column(name = "motivo_desistencia")
+	private String motivoDesistencia;
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_matricula")
 	private Date dataMatricula;
+		
 	
-	@ManyToOne
-	private Turma turma;
-	
-	@OneToMany
-	private List<Disciplina> disciplina;
-	
-	
-	public int getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
 	public String getFoto() {
 		return foto;
 	}
@@ -70,17 +59,17 @@ public class AlunoMatriculado extends Pessoa {
 	public void setDesistencia(boolean desistencia) {
 		this.desistencia = desistencia;
 	}
-	public String getResponsavelNotificacao() {
-		return responsavelNotificacao;
+	public String getResponsavelPelaNotificacao() {
+		return responsavelPelaNotificacao;
 	}
-	public void setResponsavelNotificacao(String responsavelNotificacao) {
-		this.responsavelNotificacao = responsavelNotificacao;
+	public void setResponsavelPelaNotificacao(String responsavelPelaNotificacao) {
+		this.responsavelPelaNotificacao = responsavelPelaNotificacao;
 	}
-	public String getMotivoDesestencia() {
-		return motivoDesestencia;
+	public String getMotivoDesistencia() {
+		return motivoDesistencia;
 	}
-	public void setMotivoDesestencia(String motivoDesestencia) {
-		this.motivoDesestencia = motivoDesestencia;
+	public void setMotivoDesistencia(String motivoDesistencia) {
+		this.motivoDesistencia = motivoDesistencia;
 	}
 	public Date getDataMatricula() {
 		return dataMatricula;
@@ -88,41 +77,6 @@ public class AlunoMatriculado extends Pessoa {
 	public void setDataMatricula(Date dataMatricula) {
 		this.dataMatricula = dataMatricula;
 	}
-	public Turma getTurma() {
-		return turma;
-	}
-	public void setTurma(Turma turma) {
-		this.turma = turma;
-	}
-	
-	public List<Disciplina> getDisciplina() {
-		return disciplina;
-	}
-	public void setDisciplina(List<Disciplina> disciplina) {
-		this.disciplina = disciplina;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + codigo;
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AlunoMatriculado other = (AlunoMatriculado) obj;
-		if (codigo != other.codigo)
-			return false;
-		return true;
-	}
-	
-	
 	
 	
 }

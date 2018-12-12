@@ -18,9 +18,10 @@ public class DataConfiguration {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/marthaschool");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/marthaschool?createDatabaseIfNotExist=true&useSSL=true");
         dataSource.setUsername("root");
         dataSource.setPassword("tocatatu");
+   
         return dataSource;
     }
 	
@@ -32,6 +33,11 @@ public class DataConfiguration {
 		adapter.setGenerateDdl(true);
 		adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
 		adapter.setPrepareConnection(true);
+		
+	
 		return adapter;
 	}
 }
+
+
+
